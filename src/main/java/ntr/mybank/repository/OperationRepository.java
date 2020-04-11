@@ -12,5 +12,5 @@ import ntr.mybank.model.Operation;
 @Repository
 public interface OperationRepository extends CrudRepository<Operation, Integer>{
 	List<Operation> findByAccount(Account account);
-	List<Operation> findByDateCreatedAccount(Date dateCreated, Account account);
+	List<Operation> findByDateCreatedAndAccount(Date dateCreated, Account account);
 }

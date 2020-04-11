@@ -11,7 +11,7 @@ import ntr.mybank.model.Users;
 
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Integer>{
-	List<Account> findByUsers(Users users); 
+	List<Account> findByUser(Users user); 
 	List<Account> findByBank(Bank bank);
 	List<Account> findByNumberAccount(String numberAccount); 
 	List<Account> findByStatus(String status);

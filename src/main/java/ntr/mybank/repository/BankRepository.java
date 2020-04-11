@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BankRepository extends CrudRepository<Bank, Integer> {
+	Bank findByCode(String code);
 }
