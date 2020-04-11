@@ -26,6 +26,9 @@ public class Operation {
 	@JoinColumn(name = "Acct_Id")
 	private Account account;
 	
+	@Column(name = "Oprt_Amount", nullable = false)
+	private int amount;
+	
 	@Column(name="Oprt_Type")
 	private Operation_Type type;
 	
