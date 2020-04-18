@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ntr.mybank.bo.BoCreditCard;
 import ntr.mybank.model.Account;
 import ntr.mybank.model.CreditCard;
 import ntr.mybank.model.Operation;
@@ -32,15 +33,15 @@ public class AccountServiceImpl implements AccountService {
 	}
 	
 	@Override
-	public Operation debit(CreditCard creditCard, int amount) throws Exception 
+	public Operation debit(BoCreditCard boCreditCard, int amount) throws Exception 
 	{
 		try
 		{
 			Operation operation = null;
-			CreditCard creditCardOrigin = creditCardService.getCreditCardByNumberCredit(creditCard.getNumberCredit());
+			CreditCard creditCardOrigin = creditCardService.getCreditCardByNumberCredit(boCreditCard.getNumberCredit());
 			Account account = creditCardOrigin.getAccount();
 			
-			if(creditCardOrigin != null && creditCardService.isCardValid(creditCard))
+			if(creditCardOrigin != null && creditCardService.isCardValid(boCreditCard))
 			{
 				operation = this.debit(account, amount);
 			}
@@ -55,7 +56,7 @@ public class AccountServiceImpl implements AccountService {
 		}
 		catch(Exception exception)
 		{
-			String msg = "(AccountServiceImpl): une erreur s'est produite lors du débit avec pour paramètres '"+creditCard+"', 'amount:"+amount+"'";
+			String msg = "(AccountServiceImpl): une erreur s'est produite lors du débit avec pour paramètres '"+boCreditCard+"', 'amount:"+amount+"'";
 			_logger.error(msg);
 			throw new Exception(msg, exception);
 		}
@@ -93,14 +94,14 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public Operation credit(CreditCard creditCard, int amount) throws Exception {
+	public Operation credit(BoCreditCard boCreditCard, int amount) throws Exception {
 		try
 		{
 			Operation operation = null;
-			CreditCard creditCardOrigin = creditCardService.getCreditCardByNumberCredit(creditCard.getNumberCredit());
+			CreditCard creditCardOrigin = creditCardService.getCreditCardByNumberCredit(boCreditCard.getNumberCredit());
 			Account account = creditCardOrigin.getAccount();
 			
-			if(creditCardOrigin != null && creditCardService.isCardValid(creditCardOrigin))
+			if(creditCardOrigin != null && creditCardService.isCardValid(boCreditCard))
 			{
 				operation = this.credit(account, amount);
 			}
@@ -115,7 +116,7 @@ public class AccountServiceImpl implements AccountService {
 		}
 		catch(Exception exception)
 		{
-			String msg = "(AccountServiceImpl): une erreur s'est produite lors du crédit du compte avec pour paramètres '"+creditCard+"', 'amount:"+amount+"'";
+			String msg = "(AccountServiceImpl): une erreur s'est produite lors du crédit du compte avec pour paramètres '"+boCreditCard+"', 'amount:"+amount+"'";
 			_logger.error(msg);
 			throw new Exception(msg, exception);
 		}
@@ -156,6 +157,21 @@ public class AccountServiceImpl implements AccountService {
 		catch(Exception exception)
 		{
 			String msg = "(AccountServiceImpl): une erreur s'est produite lors de l'enregistrement avec pour paramètres '"+account+"'";
+			_logger.error(msg);
+			throw new Exception(msg, exception);
+		}
+	}
+	
+	@Override
+	public Account getAccountById(int id) throws Exception
+	{
+		try
+		{
+			return accountRepository.findById(id).get();
+		}
+		catch(Exception exception)
+		{
+			String msg = "(AccountServiceImpl): une erreur s'est produite lors de la récuperation du compte avec pour paramètres 'id="+id+"'";
 			_logger.error(msg);
 			throw new Exception(msg, exception);
 		}
