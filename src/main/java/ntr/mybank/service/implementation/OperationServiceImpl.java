@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import ntr.mybank.model.Account;
 import ntr.mybank.model.Operation;
 import ntr.mybank.repository.OperationRepository;
+import ntr.mybank.service.AccountService;
 import ntr.mybank.service.OperationService;
 import ntr.mybank.utilities.Operation_Type;
 
@@ -23,13 +25,31 @@ public class OperationServiceImpl implements OperationService {
 	Logger _logger = LogManager.getLogger(OperationServiceImpl.class);
 	
 	private OperationRepository _operationRepository;
+	private AccountService accountService;
 	
 	@Autowired
-	public OperationServiceImpl(OperationRepository operationRepository)
+	public OperationServiceImpl(OperationRepository operationRepository, @Lazy AccountService accountService)
 	{
 		_operationRepository = operationRepository;
+		this.accountService = accountService;
 	}
 
+	@Override
+	public List<Operation> getOperations(int accountId) throws Exception
+	{
+		try
+		{
+			Account account = this.accountService.getAccountById(accountId);
+			return this.getOperations(account);
+		}
+		catch(Exception exception)
+		{
+			String msg = "(OperationServiceImpl): une erreur s'est produite lors du chargement de la liste des operations avec pour paramètres [accountId:'"+accountId+"']";
+			_logger.error(msg);
+			throw new Exception(msg, exception);
+		}
+	}
+	
 	@Override
 	public List<Operation> getOperations(Account account) throws Exception
 	{
