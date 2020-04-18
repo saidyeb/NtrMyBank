@@ -131,11 +131,19 @@ public class Operation {
 	}
 
 
+	public int getAmount() {
+		return amount;
+	}
+
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Operation [id=" + id + ", account=" + account + ", type=" + type + ", status=" + status + ", detail="
-				+ detail + ", dateCreated=" + dateCreated + ", deleted=" + deleted + "]";
+		return "Operation [id=" + id + ", account=" + account + ", amount=" + amount + ", type=" + type + ", status="
+				+ status + ", detail=" + detail + ", dateCreated=" + dateCreated + ", deleted=" + deleted + "]";
 	}
-	
-
 }
