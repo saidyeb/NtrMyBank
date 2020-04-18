@@ -28,7 +28,7 @@ public class CreditCard {
 	private Users user;
 	
 	@Column(name="Card_NumberCredit")
-	private int NumberCredit;
+	private int numberCredit;
 	
 	@Column(name="Card_CVC")
 	private int CVC;
@@ -47,7 +47,7 @@ public class CreditCard {
 		super();
 		this.account = account;
 		this.user = user;
-		NumberCredit = numberCredit;
+		this.numberCredit = numberCredit;
 		CVC = cVC;
 		DateExpire = dateExpire;
 		this.deleted = false;
@@ -78,11 +78,11 @@ public class CreditCard {
 	}
 
 	public int getNumberCredit() {
-		return NumberCredit;
+		return this.numberCredit;
 	}
 
 	public void setNumberCredit(int numberCredit) {
-		NumberCredit = numberCredit;
+		this.numberCredit = numberCredit;
 	}
 
 	public int getCVC() {
@@ -111,7 +111,7 @@ public class CreditCard {
 
 	@Override
 	public String toString() {
-		return "CreditCard [id=" + id + ", account=" + account + ", user=" + user + ", NumberCredit=" + NumberCredit
+		return "CreditCard [id=" + id + ", account=" + account + ", user=" + user + ", NumberCredit=" + numberCredit
 				+ ", CVC=" + CVC + ", DateExpire=" + DateExpire + ", deleted=" + deleted + "]";
 	}
 	
