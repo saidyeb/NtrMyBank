@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Users {
@@ -19,17 +18,13 @@ public class Users {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="User_Id")
 	private int id;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "Acct_Id")
-	private Account account;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Addr_Id")
 	private Address address;
 	
 	@Column(name="User_Code", unique = true)
-	private int Code;
+	private int code;
 	
 	@Column(name="User_Password")
 	private String password;
@@ -53,12 +48,11 @@ public class Users {
 	public Users() {}
 
 
-	public Users(Account account, Address address, int code, String password, String firstName, String lastName,
+	public Users(Address address, int code, String password, String firstName, String lastName,
 			Date dateBirth, String emailAddress, int phoneNumber) {
 		super();
-		this.account = account;
 		this.address = address;
-		Code = code;
+		this.code = code;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -78,16 +72,6 @@ public class Users {
 	}
 
 
-	public Account getAccount() {
-		return account;
-	}
-
-
-	public void setAccount(Account account) {
-		this.account = account;
-	}
-
-
 	public Address getAddress() {
 		return address;
 	}
@@ -99,12 +83,12 @@ public class Users {
 
 
 	public int getCode() {
-		return Code;
+		return this.code;
 	}
 
 
 	public void setCode(int code) {
-		Code = code;
+		this.code = code;
 	}
 
 
@@ -170,7 +154,7 @@ public class Users {
 
 	@Override
 	public String toString() {
-		return "Users [id=" + id + ", account=" + account + ", address=" + address + ", Code=" + Code + ", password="
+		return "Users [id=" + id + ", address=" + address + ", code=" + code + ", password="
 				+ password + ", firstName=" + firstName + ", lastName=" + lastName + ", dateBirth=" + dateBirth
 				+ ", emailAddress=" + emailAddress + ", phoneNumber=" + phoneNumber + "]";
 	} 
