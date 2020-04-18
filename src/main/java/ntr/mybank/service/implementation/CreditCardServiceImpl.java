@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ntr.mybank.bo.BoCreditCard;
 import ntr.mybank.model.Account;
 import ntr.mybank.model.CreditCard;
 import ntr.mybank.repository.CreditCardRepository;
@@ -60,17 +61,17 @@ public class CreditCardServiceImpl implements CreditCardService {
 	}
 
 	@Override
-	public boolean isCardValid(CreditCard creditCard) throws Exception 
+	public boolean isCardValid(BoCreditCard boCreditCard) throws Exception 
 	{
 		try
 		{
 			boolean isValid = false;
 			
-			if(creditCardRepository.existsByNumberCreditAndCVC(creditCard.getNumberCredit(), creditCard.getCVC()))
+			if(creditCardRepository.existsByNumberCreditAndCVC(boCreditCard.getNumberCredit(), boCreditCard.getCvc()))
 			{
-				CreditCard CreditCardOriginal = creditCardRepository.findByNumberCredit(creditCard.getNumberCredit());
+				CreditCard CreditCardOriginal = creditCardRepository.findByNumberCredit(boCreditCard.getNumberCredit());
 				
-				if( CreditCardOriginal.getDateExpire() == creditCard.getDateExpire() )
+				if( CreditCardOriginal.getDateExpire() == boCreditCard.getDateExpire() )
 				{
 					isValid = true;
 				}
@@ -80,7 +81,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 		}
 		catch(Exception exception)
 		{
-			String msg = "(CreditCardServiceImpl): une erreur s'est produite lors de la validation du credit card avec pour paramètres '"+creditCard+"'";
+			String msg = "(CreditCardServiceImpl): une erreur s'est produite lors de la validation du credit card avec pour paramètres '"+boCreditCard+"'";
 			_logger.error(msg);
 			throw new Exception(msg, exception);
 		}
