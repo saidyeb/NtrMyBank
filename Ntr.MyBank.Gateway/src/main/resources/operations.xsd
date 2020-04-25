@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://spring:5001/soap/myBank/gateway"
+	targetNamespace="http://spring:5001/soap/myBank/gateway"
+	elementFormDefault="qualified">
+
+	<xs:element name="debitRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="creditCard" type="tns:creditCard" />
+				<xs:element name="amount" type="xs:double" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="debitResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="status" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="creditCard">
+		<xs:sequence>
+			<xs:element name="numberCredit" type="xs:int" />
+			<xs:element name="cvc" type="xs:int" />
+			<xs:element name="dateExpire" type="xs:date" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>
